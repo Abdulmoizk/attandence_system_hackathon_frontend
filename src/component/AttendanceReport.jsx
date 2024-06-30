@@ -1,7 +1,22 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { FaCheckCircle, FaTimesCircle } from "react-icons/fa";
+import axios from "axios";
 
 const AttendanceReport = () => {
+    const [allData, setAllData] = useState([]);
+
+  const gettingAllData = async () => {
+    const response = await axios.get('http://localhost:5000/api/allData')
+    setAllData(response?.data)
+  } 
+
+  console.log(allData, "daataa")
+
+  useEffect(() => {
+    gettingAllData()
+  }, [])
+
+  console.log(allData, "dsadsa")
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col">
       <header className="bg-blue-600 text-white p-4 flex justify-between items-center">
@@ -42,34 +57,29 @@ const AttendanceReport = () => {
             <div className="flex flex-wrap mb-4">
               <select className="border p-2 mr-2 mb-2 rounded">
                 <option>Select Campus</option>
-                <option>Gulshan e iqbal</option>
-                <option>Bahadurabad</option>
-                <option>SMCSH</option>
-                <option>Numaish</option>
-                <option>Aliabad</option>
+                {allData?.length > 0 && allData?.filter((filItem) => filItem == "campuses")?.map((item) => (
+                  <option key={item?._id}>{item?.name}</option>
+                ))}
+                
               </select>
               <select className="border p-2 mr-2 mb-2 rounded">
                 <option>Select Course</option>
-                <option>Web & App Development</option>
-                <option>Graphic Design</option>
-                <option>Flutter Development</option>
-                <option>Python Development</option>
-                <option>Mobile Repairing</option>
+                {allData?.length > 0 && allData?.filter((filItem) => filItem == "course")?.map((item) => (
+                  <option key={item?._id}>{item?.name}</option>
+                ))}
+
               </select>
               <select className="border p-2 mr-2 mb-2 rounded">
                 <option>Select Batch</option>
-                <option>Batch 10</option>
-                <option>Batch 9</option>
-                <option>Batch 8</option>
-                <option>Batch 7</option>
-                <option>Batch 6</option>
+                {allData?.length > 0 && allData?.filter((filItem) => filItem == "batches")?.map((item) => (
+                  <option key={item?._id}>{item?.name}</option>
+                ))}
               </select>
               <select className="border p-2 mr-2 mb-2 rounded">
                 <option>Instructor Name</option>
-                <option>Sir Ghous Ahmed</option>
-                <option>Sir Bilal</option>
-                <option>Sir Usman</option>
-                <option>Sir Khizer</option>
+                {allData?.length > 0 && allData?.filter((filItem) => filItem == "teachers")?.map((item) => (
+                  <option key={item?._id}>{item?.name}</option>
+                ))}
               </select>
               <button className="bg-blue-600 text-white px-4 py-2 rounded">
                 Search
