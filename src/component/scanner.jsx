@@ -9,7 +9,7 @@ function Scanner({ message }) {
   const [qrData, setQrData] = useState("");
   const videoRef = useRef(null);
   const qrScannerRef = useRef(null);
-  const audioRef = useRef(null);
+  // const audioRef = useRef(null);
 
   const handleScan = (result) => {
     if (result) {
@@ -19,16 +19,22 @@ function Scanner({ message }) {
       // Retrieve existing data from local storage
       let storedData = JSON.parse(localStorage.getItem("qrData")) || [];
   
-      // Append the new result to the existing data
-      storedData.push(result.data);
+      // Check if the data already exists in the array
+      if (!storedData.includes(result.data)) {
+        // Append the new result to the existing data
+        storedData.push(result.data);
   
-      // Save the updated data back to local storage
-      localStorage.setItem("qrData", JSON.stringify(storedData));
+        // Save the updated data back to local storage
+        localStorage.setItem("qrData", JSON.stringify(storedData));
+      } else {
+        console.log("Data already exists in local storage");
+      }
   
       // Play the audio
-      audioRef.current.play();
+      // audioRef.current.play();
     }
   };
+  
   
 
   const startCamera = async () => {
@@ -94,7 +100,7 @@ function Scanner({ message }) {
         <div className={`flex flex-col gap-2 items-center`}>
           <h1 className="text-3xl font-bold"> QR Scanner</h1>
           <video ref={videoRef} className={`w-80`}></video>
-          <audio ref={audioRef} src="/beep.mp3" className="hidden"></audio>
+          {/* <audio ref={audioRef} src="/beep.mp3" className="hidden"></audio> */}
           {qrData && (
             <p className="text-lg">
               <span className="font-semibold text-xl">Scanned Data:</span>{" "}

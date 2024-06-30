@@ -11,9 +11,15 @@ const AttendanceReport = () => {
     setAllData(response?.data)
   } 
 
+const gettingStudents = async () => {
+  const respose = await axios.get("http://localhost:5000/api/students")
+  console.log(respose)
+}
+
   console.log(allData, "daataa")
 
   useEffect(() => {
+    gettingStudents()
     gettingAllData()
   }, [])
 
