@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { FaCheckCircle, FaTimesCircle } from "react-icons/fa";
 import axios from "axios";
+import QRScanner from "./QrModal";
 
 const AttendanceReport = () => {
     const [allData, setAllData] = useState([]);
@@ -55,6 +56,10 @@ const AttendanceReport = () => {
           <div className="bg-white shadow rounded-lg p-6">
             <h2 className="text-xl font-bold mb-4">Attendance</h2>
             <div className="flex flex-wrap mb-4">
+            <QRScanner
+                button="Scan Attendance"
+                message={"Attendance marked"}
+              />
               <select className="border p-2 mr-2 mb-2 rounded">
                 <option>Select Campus</option>
                 {allData?.length > 0 && allData?.filter((filItem) => filItem == "campuses")?.map((item) => (
